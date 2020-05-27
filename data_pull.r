@@ -59,3 +59,25 @@ kurtosis(no2$mes, na.rm = TRUE)
 log_no2 = log(no2$mes) # no2 data appear to be log-normal, log defaults to natural log
 # hist(log_no2)
 
+# April of each year
+no2_april <- no2[which(no2$mon == "04"), names(no2) %in% c("yea", "dom", "mes")]
+no2_2016 <- no2_april[which(no2_april$yea == 2016), names(no2_april) %in% c("dom", "mes")]
+no2_2016_ln <- log(no2_2016$mes)
+no2_2017 <- no2_april[which(no2_april$yea == 2017), names(no2_april) %in% c("dom", "mes")]
+no2_2017_ln <- log(no2_2017$mes)
+no2_2018 <- no2_april[which(no2_april$yea == 2018), names(no2_april) %in% c("dom", "mes")]
+no2_2018_ln <- log(no2_2018$mes)
+no2_2019 <- no2_april[which(no2_april$yea == 2019), names(no2_april) %in% c("dom", "mes")]
+no2_2019_ln <- log(no2_2019$mes)
+no2_2020 <- no2_april[which(no2_april$yea == 2020), names(no2_april) %in% c("dom", "mes")]
+no2_2020_ln <- log(no2_2020$mes)
+
+library(ggpubr)
+ggboxplot(no2_april, x = "yea", y = "mes")
+t.test(no2_2017_ln,no2_2020_ln, alternative = "two.sided", var.equal = FALSE)
+# http://www.sthda.com/english/wiki/unpaired-two-samples-t-test-in-r
+# https://www.statsdirect.co.uk/help/parametric_methods/utt.htm
+# https://towardsdatascience.com/how-to-compare-two-distributions-in-practice-8c676904a285
+
+
+
