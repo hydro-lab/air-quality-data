@@ -54,6 +54,15 @@ summary(model1)
 # fertilizer for the Golden Rain, which gives us the slope of m = 75.333.  Similarly, the next two rows give the 
 # slope differences for the next two varieties.
 
+confint(model1)
+#                         2.5 %    97.5 %
+#       (Intercept)        67.24122  96.55878
+# VarietyMarvellous       -12.21398  29.24731
+# VarietyVictory          -29.33065  12.13065
+# nitro                    36.15609 114.51058
+# VarietyMarvellous:nitro -66.15499  44.65499
+# VarietyVictory:nitro    -49.65499  61.15499
+
 model2 <- lme(yield~Variety*nitro, data = Oats, random = ~1|Block/Variety)
 # Here, this will be the linear model with fixed Variety and nitro, with random effects from the Block (duplicates) 
 # and even in Variety.  I question the use of variety.  We'll see what happens.
