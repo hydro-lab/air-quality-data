@@ -83,14 +83,19 @@ summary(model1)
 confint(model1)
 
 #april 2020 v. previous aprils
-model2=lm(pm25log~april_2020 + april_2017 + april_2018 + april_2016 + precip, data = pm25_april)
+model2=lm(pm25~april_2020 + precip, data = pm25_april)
 summary(model2)
 confint(model2)
 
-#over time
-model3=lm(pm25~date + precip, data = lincoln_daily)
+#april 2020 v. previous aprils with indicators
+model3=lm(pm25log~april_2020 + april_2017 + april_2018 + april_2016 + precip, data = pm25_april)
 summary(model3)
 confint(model3)
+
+#over time
+model4=lm(pm25~date + precip, data = lincoln_daily)
+summary(model4)
+confint(model4)
 
 lm_pm25 <- array(0, dim = c(nrow(pm25_april)))
 for (i in 1:nrow(pm25_april)) {
