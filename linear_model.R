@@ -66,16 +66,18 @@ for (i in 1:(nrow(lincoln_daily))) {
   }
 }
 
-lincoln_daily <- data.frame(date, pm25, precip, API, temp, april_2020, april_2019, april_2018, april_2017, april_2016)
+lincoln_daily <- data.frame(date, pm25, precip, temp, april_2020, april_2019, april_2018, april_2017, april_2016)
 lincoln_daily$month <- format(lincoln_daily$date, '%m')
 pm25_april <- lincoln_daily[which(lincoln_daily$month == "04"), names(lincoln_daily) %in% c("date", "pm25", "temp", "precip", "april_2020", "april_2019", "april_2018", "april_2017", "april_2016")]
 
 #intercept is avg of the outcome when everything else = 0
 #linear model y = a + bx
 
+hist(pm25_april$pm25)
+
 #log transforming the data for normal distribution 
-# pm25_april$pm25log <- log(pm25_april$pm25)
-# hist(pm25_april$pm25log)
+pm25_april$pm25log <- log(pm25_april$pm25)
+hist(pm25_april$pm25log)
 
 #april 2020 v. all previous months
 model1=lm(pm25~april_2020 + precip, data = lincoln_daily) 
