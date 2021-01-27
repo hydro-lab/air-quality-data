@@ -36,7 +36,7 @@ x1 = h$breaks
 # Assemble table of X_0^2
 v = array(0, dim = c(k))             # Array for the normalized value
 p = v                                # Array for the F(x) or CDF of the normalized variable, v
-e = v                                # Variable, e_j = n * p_j, where n is the number of variables/degrees of freedom
+e = v                                # Variable, e_j = n * p_j, where n is the number of variables
 for (j in 1:k) {
       v[j] = (x1[j+1] - m)/s2        # Normalized variable
       p[j] = pnorm(v[j])             # F(x_j)
@@ -49,3 +49,7 @@ for (j in 1:k) {
       }
 }
 X_0 = sum(((b-e)^2)/e)               # Summation.  Equation (1) from section 23.7 box.
+# In the chi-squared distribution table, k - r - 1 = 7 because we estimate two parameters, e_j and b_j, and 
+# we seek a 95% probability (X_0^2 <= c), c = 14.07.  Since X_0^2 < c, the distribution is considered normal.
+
+# There is also a built-in Chi-squared goodness of fit test, chisq.test.  
