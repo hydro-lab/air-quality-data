@@ -34,18 +34,18 @@ k = length(h$breaks)-1 # number of intervals
 x1 = h$breaks
 
 # Assemble table of X_0^2
-v = array(0, dim = c(k))
-p = v
-e = v
+v = array(0, dim = c(k))             # Array for the normalized value
+p = v                                # Array for the F(x) or CDF of the normalized variable, v
+e = v                                # Variable, e_j = n * p_j, where n is the number of variables/degrees of freedom
 for (j in 1:k) {
-      v[j] = (x1[j+1] - m)/s2       # Normalized variable
-      p[j] = pnorm(v[j])           # F(x_j)
+      v[j] = (x1[j+1] - m)/s2        # Normalized variable
+      p[j] = pnorm(v[j])             # F(x_j)
       if (j==k) {
             p[j] = 1
       }
       e[j] = n*p[j]
       if (j>1) {
-            e[j] = e[j] - (n*p[j-1])
+            e[j] = e[j] - (n*p[j-1]) # adjustment for integral of p(j) from v(j-1) to v(j)
       }
 }
-X_0 = sum(((b-e)^2)/e)
+X_0 = sum(((b-e)^2)/e)               # Summation.  Equation (1) from section 23.7 box.
