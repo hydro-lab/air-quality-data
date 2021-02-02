@@ -66,36 +66,47 @@ for (i in 1:(nrow(lincoln_daily))) {
   }
 }
 
-lincoln_daily <- data.frame(date, pm25, precip, temp, april_2020, april_2019, april_2018, april_2017, april_2016)
+lincoln_daily <- data.frame(date, pm25, precip, API, temp, april_2020, april_2019, april_2018, april_2017, april_2016)
 lincoln_daily$month <- format(lincoln_daily$date, '%m')
 pm25_april <- lincoln_daily[which(lincoln_daily$month == "04"), names(lincoln_daily) %in% c("date", "pm25", "temp", "precip", "april_2020", "april_2019", "april_2018", "april_2017", "april_2016")]
 
-#intercept is avg of the outcome when everything else = 0
-#linear model y = a + bx
-
+#checking for normal distribution
 hist(pm25_april$pm25)
 
-#log transforming the data for normal distribution 
+# fixing zero values
+j <- 0
+for (i in 1:nrow(lincoln_daily)) {
+  if (is.na(lincoln_daily$pm25[i]) == FALSE) {
+    if (lincoln_daily$pm25[i] == 0) {
+      lincoln_daily$pm25[i] <- NA
+      lincoln_daily$pm25log[i] <- NA
+      j <- j + 1
+    }
+  }
+}
+
+#log transforming the data for normal distribution (if not already normal)
 pm25_april$pm25log <- log(pm25_april$pm25)
 hist(pm25_april$pm25log)
+lincoln_daily$pm25log <- log(lincoln_daily$pm25)
 
 #april 2020 v. all previous months
-model1=lm(pm25~april_2020 + precip, data = lincoln_daily) 
+model1=lm(pm25log~april_2020 + precip, data = lincoln_daily) 
 summary(model1)
 confint(model1)
 
 #april 2020 v. previous aprils
-model2=lm(pm25~april_2020 + precip, data = pm25_april)
+model2=lm(pm25log~april_2020 + precip, data = pm25_april)
 summary(model2)
 confint(model2)
 
 #april 2020 v. previous aprils with indicators
-model3=lm(pm25log~april_2020 + april_2017 + april_2018 + april_2016 + precip, data = pm25_april)
+model3=lm(pm25log~april_2019 + april_2018 + april_2017 + april_2016 + precip, data = pm25_april)
 summary(model3)
 confint(model3)
 
 #over time
-model4=lm(pm25~date + precip, data = lincoln_daily)
+model4=lm(pm25log~date + precip, data = lincoln_daily)
 summary(model4)
 confint(model4)
 
