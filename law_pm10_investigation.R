@@ -1,4 +1,5 @@
 # This code is to examine the unusual distribution found at Lawranceville, PM10
+# also need to examine North Braddock and Liberty for SO2 -- extreme distributions.
 library(e1071) # includes skewness and kurtosis functions
 
 x <- read.csv("Raw_1.csv")
