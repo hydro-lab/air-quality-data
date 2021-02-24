@@ -20,3 +20,17 @@ ggplot(y, aes(x = angle, y = count)) +
       scale_x_continuous(breaks = seq(0, 360, 45)) +
       theme_linedraw() +
       theme(axis.title = element_blank(), panel.ontop = TRUE, panel.background = element_blank())
+
+# April only
+a <- x[which(x$Month == 4), names(x) %in% c("Year", "Month", "Day", "Atemp", "RH", "Wind Dir", "Precip")]
+g <- hist(a$`Wind Dir`, breaks = br)
+ga <- g$mids
+gc <- g$counts
+b <- data.frame(ga, gc)
+ggplot(b, aes(x = ga, y = gc)) +
+      geom_col(fill = "steelblue", color = "steelblue") +
+      coord_polar(theta = "x", start = 0) +
+      scale_x_continuous(breaks = seq(0, 360, 45)) +
+      theme_linedraw() +
+      theme(axis.title = element_blank(), panel.ontop = TRUE, panel.background = element_blank())
+
