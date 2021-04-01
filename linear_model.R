@@ -66,7 +66,7 @@ for (i in 1:(nrow(lincoln_daily))) {
   }
 }
 
-lincoln_daily <- data.frame(date, pm25, precip, API, temp, april_2020, april_2019, april_2018, april_2017, april_2016)
+lincoln_daily <- data.frame(date, pm25, precip, temp, april_2020, april_2019, april_2018, april_2017, april_2016)
 lincoln_daily$month <- format(lincoln_daily$date, '%m')
 pm25_april <- lincoln_daily[which(lincoln_daily$month == "04"), names(lincoln_daily) %in% c("date", "pm25", "temp", "precip", "april_2020", "april_2019", "april_2018", "april_2017", "april_2016")]
 
