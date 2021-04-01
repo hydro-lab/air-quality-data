@@ -73,6 +73,11 @@ pm25_april <- lincoln_daily[which(lincoln_daily$month == "04"), names(lincoln_da
 #checking for normal distribution
 hist(pm25_april$pm25)
 
+#log transforming the data for normal distribution (if not already normal)
+pm25_april$pm25log <- log(pm25_april$pm25)
+lincoln_daily$pm25log <- log(lincoln_daily$pm25)
+hist(pm25_april$pm25log)
+
 # fixing zero values
 j <- 0
 for (i in 1:nrow(lincoln_daily)) {
@@ -84,11 +89,6 @@ for (i in 1:nrow(lincoln_daily)) {
     }
   }
 }
-
-#log transforming the data for normal distribution (if not already normal)
-pm25_april$pm25log <- log(pm25_april$pm25)
-hist(pm25_april$pm25log)
-lincoln_daily$pm25log <- log(lincoln_daily$pm25)
 
 #april 2020 v. all previous months
 model1=lm(pm25log~april_2020 + precip, data = lincoln_daily) 
@@ -104,11 +104,24 @@ confint(model2)
 model3=lm(pm25log~april_2019 + april_2018 + april_2017 + april_2016 + precip, data = pm25_april)
 summary(model3)
 confint(model3)
+hist(residuals(model3), xlab = "LM Residuals", ylab = "Count", main = "")
+plot(residuals(model3), xlab = "Sequential Aprils", ylab = "LM Residual")
 
 #over time
 model4=lm(pm25log~date + precip, data = lincoln_daily)
 summary(model4)
 confint(model4)
+
+# Using generallized linear model:
+model5 <- glm(pm25~april_2020 + precip, data = pm25_april, family = gaussian(link = "log"))
+summary(model5)
+confint(model5)
+
+model6 <- glm(pm25log~april_2019 + april_2018 + april_2017 + april_2016 + precip, data = pm25_april, family = gaussian(link = "log"))
+summary(model6)
+confint(model6)
+hist(residuals(model6), xlab = "GLM Residuals", ylab = "Count", main = "")
+plot(residuals(model6), xlab = "Sequential Aprils", ylab = "GLM Residual")
 
 lm_pm25 <- array(0, dim = c(nrow(pm25_april)))
 for (i in 1:nrow(pm25_april)) {
