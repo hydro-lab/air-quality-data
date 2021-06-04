@@ -32,3 +32,9 @@ summary(fmlOrthF)
 # Number of Observations: 44
 # Number of Groups: 11 
 
+# This gives a std = 2.06847 and intercept of 0.7800331
+age <- c(8,14)
+dist <- 0.7800331+2.06847*age
+plot(OrthoFem$age, OrthoFem$distance, type = "p")
+par(new=T)
+plot(age, dist, type = "l")

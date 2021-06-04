@@ -117,7 +117,7 @@ model5 <- glm(pm25~april_2020 + precip, data = pm25_april, family = gaussian(lin
 summary(model5)
 confint(model5)
 
-model6 <- glm(pm25log~april_2019 + april_2018 + april_2017 + april_2016 + precip, data = pm25_april, family = gaussian(link = "log"))
+model6 <- glm(pm25~april_2019 + april_2018 + april_2017 + april_2016 + precip, data = pm25_april, family = gaussian(link = "log"))
 summary(model6)
 confint(model6)
 hist(residuals(model6), xlab = "GLM Residuals", ylab = "Count", main = "")

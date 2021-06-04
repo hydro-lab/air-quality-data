@@ -54,7 +54,7 @@ summary(model1)
 # fertilizer for the Golden Rain, which gives us the slope of m = 75.333.  Similarly, the next two rows give the 
 # slope differences for the next two varieties.
 
-confint(model1)
+confint(model1) # https://stat.ethz.ch/R-manual/R-devel/library/stats/html/confint.html
 #                         2.5 %    97.5 %
 #       (Intercept)        67.24122  96.55878
 # VarietyMarvellous       -12.21398  29.24731
